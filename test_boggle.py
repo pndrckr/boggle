@@ -38,3 +38,17 @@ class TestBoggle(unittest.TestCase):
         self.assertTrue((2, 2) in neighbours)
         self.assertTrue((2, 3) in neighbours)
 
+    def test_all_grid_neighbours(self):
+        grid = boggle.make_grid(2,2)
+        neighbours = boggle.all_grid_neighbours(grid)
+        self.assertEqual(len(neighbours), len(grid))
+        for pos in grid:
+            others = list(grid) #Crea lista desde la clave de dicionario
+            others.remove(pos)
+            self.assertListEqual(sorted(neighbours[pos]), sorted(others))
+    def test_converting_a_path_to_a_word(self):
+        grid = boggle.make_grid(2, 2)
+        oneLetterWord = boggle.path_to_word(grid, [(0,0)])
+        twoLetterWord = boggle.path_to_word(grid, [(0, 0), (1, 1)])
+        self.assertEqual(oneLetterWord, grid[(0, 0)])
+        self.assertEqual(twoLetterWord, grid[(0, 0)] + grid[(1, 1)])
