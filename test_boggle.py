@@ -68,3 +68,7 @@ class TestBoggle(unittest.TestCase):
         self.assertTrue(twoLetterWord in foundWords)
         self.assertTrue(threeLetterWord in foundWords)
         self.assertTrue(notThereWord not in foundWords)
+
+    def test_load_dictionary(self):
+        dictionary = boggle.get_dictionary('C:\Users\PNDRCKR\Documents\Stream_2\python\day3\words.txt')
+        self.assertGreater(len(dictionary),0)

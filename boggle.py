@@ -43,14 +43,11 @@ def search(grid, dictionary):
         words.append(path_to_word(grid, path))
     return set(words)
 
+def get_dictionary(dictionary_file):
+    with open(dictionary_file) as f:
+        return [w.strip().upper() for w in f]
 
-# print make_grid(2, 2)
 
-
-
-# grid = make_grid(2, 2)
-# n = all_grid_neighbours(grid)
-# print n
 
 
 
