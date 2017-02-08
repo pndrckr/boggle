@@ -43,12 +43,28 @@ class TestBoggle(unittest.TestCase):
         neighbours = boggle.all_grid_neighbours(grid)
         self.assertEqual(len(neighbours), len(grid))
         for pos in grid:
-            others = list(grid) #Crea lista desde la clave de dicionario
+            others = list(grid) #Crea lista con las claves del dicionario
             others.remove(pos)
             self.assertListEqual(sorted(neighbours[pos]), sorted(others))
+
+    #         No es bueno nunca incluir if o loops en tests
+
     def test_converting_a_path_to_a_word(self):
         grid = boggle.make_grid(2, 2)
         oneLetterWord = boggle.path_to_word(grid, [(0,0)])
         twoLetterWord = boggle.path_to_word(grid, [(0, 0), (1, 1)])
         self.assertEqual(oneLetterWord, grid[(0, 0)])
         self.assertEqual(twoLetterWord, grid[(0, 0)] + grid[(1, 1)])
+
+    def test_search_grid_for_words(self):
+        grid = {(0, 0): 'A', (0, 1): 'B', (1, 0): 'C', (1, 1): 'D'}
+        twoLetterWord = 'AB'
+        threeLetterWord = 'ABC'
+        notThereWord = 'EEE'
+        dictionary = [twoLetterWord, threeLetterWord, notThereWord]
+
+        foundWords = boggle.search(grid, dictionary)
+
+        self.assertTrue(twoLetterWord in foundWords)
+        self.assertTrue(threeLetterWord in foundWords)
+        self.assertTrue(notThereWord not in foundWords)

@@ -24,8 +24,35 @@ def all_grid_neighbours(grid):
 def path_to_word(grid, path):
     return ''.join([grid[p] for p in path])
 
-print make_grid(2, 2)
-print neighbours_of_position((0, 0))
+def search(grid, dictionary):
+    neighbours = all_grid_neighbours(grid)
+    paths = []
+    def do_search(path):
+        word = path_to_word(grid, path)
+        if word in dictionary:
+            paths.append(path)
+        for next_pos in neighbours[path[-1]]:
+            if next_pos not in path:
+                do_search(path + [next_pos])
+
+    for position in grid:
+        do_search([position])
+
+    words = []
+    for path in paths:
+        words.append(path_to_word(grid, path))
+    return set(words)
+
+
+# print make_grid(2, 2)
+
+
+
+# grid = make_grid(2, 2)
+# n = all_grid_neighbours(grid)
+# print n
+
+
 
 
 
