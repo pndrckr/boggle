@@ -9,4 +9,7 @@ def make_grid(width, height):
             for row in range(height)
             for col in range(width)}
 
-print make_grid(4,4)
+def neighbours_of_position((row, col)):
+    return [ (row - 1, col - 1), (row - 1, col), (row - 1, col + 1),
+             (row, col - 1),                     (row, col + 1),
+             (row + 1, col - 1), (row + 1, col), (row + 1, col + 1)]
