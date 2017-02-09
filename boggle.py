@@ -24,14 +24,20 @@ def all_grid_neighbours(grid):
 def path_to_word(grid, path):
     return ''.join([grid[p] for p in path])
 
+def is_a_real_word(word,dictionary):
+    return word in dictionary
+
 def search(grid, dictionary):
     neighbours = all_grid_neighbours(grid)
     paths = []
+    full_words, stems = dictionary
 
     def do_search(path):
         word = path_to_word(grid, path)
-        if word in dictionary:
+        if is_a_real_word(word, full_words):
             paths.append(path)
+        if word not in stems:
+            return
         for next_pos in neighbours[path[-1]]:
             if next_pos not in path:
                 do_search(path + [next_pos])
@@ -56,17 +62,16 @@ def get_dictionary(dictionary_file):
                 stems.add(word[:i])
     return full_words, stems
 
-        # codigo lento viejo:  return set (w.strip().upper() for w in f) # [] es lista y toma mucho mas tiempo set() o {} es instantaneo
+      # codigo lento viejo:  return set (w.strip().upper() for w in f) # [] es lista y toma mucho mas tiempo set() o {} es instantaneo
 
 def main():
-    grid = make_grid(3, 3)
+    grid = make_grid(6, 6)
     dictionary = get_dictionary('C:\Users\PNDRCKR\Documents\Stream_2\python\day3\words.txt')
     words = search(grid, dictionary)
     for word in words:
         print word
     print "Found {0} words".format(len(words))
     print grid
-
 
 main()
 
