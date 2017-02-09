@@ -45,11 +45,21 @@ def search(grid, dictionary):
     return set(words) #no hay duplicados en sets
 
 def get_dictionary(dictionary_file):
+    full_words, stems = set(), set()
+
     with open(dictionary_file) as f:
-        return set (w.strip().upper() for w in f) # [] es lista y toma mucho mas tiempo set() o {} es instantaneo
+        for word in f:
+            word = word.strip().upper()
+            full_words.add(word)
+
+            for i in range(1, len(word)):
+                stems.add(word[:i])
+    return full_words, stems
+
+        # codigo lento viejo:  return set (w.strip().upper() for w in f) # [] es lista y toma mucho mas tiempo set() o {} es instantaneo
 
 def main():
-    grid = make_grid(4, 4)
+    grid = make_grid(3, 3)
     dictionary = get_dictionary('C:\Users\PNDRCKR\Documents\Stream_2\python\day3\words.txt')
     words = search(grid, dictionary)
     for word in words:
