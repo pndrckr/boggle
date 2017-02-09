@@ -27,6 +27,7 @@ def path_to_word(grid, path):
 def search(grid, dictionary):
     neighbours = all_grid_neighbours(grid)
     paths = []
+
     def do_search(path):
         word = path_to_word(grid, path)
         if word in dictionary:
@@ -41,19 +42,20 @@ def search(grid, dictionary):
     words = []
     for path in paths:
         words.append(path_to_word(grid, path))
-    return set(words)
+    return set(words) #no hay duplicados en sets
 
 def get_dictionary(dictionary_file):
     with open(dictionary_file) as f:
-        return [w.strip().upper() for w in f]
+        return set (w.strip().upper() for w in f) # [] es lista y toma mucho mas tiempo set() o {} es instantaneo
 
 def main():
-    grid = make_grid(3, 3)
+    grid = make_grid(4, 4)
     dictionary = get_dictionary('C:\Users\PNDRCKR\Documents\Stream_2\python\day3\words.txt')
     words = search(grid, dictionary)
     for word in words:
         print word
     print "Found {0} words".format(len(words))
+    print grid
 
 
 main()
